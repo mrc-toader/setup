@@ -75,3 +75,5 @@ sudo ansible-playbook board_local.yml
 cd liquid-setup/ansible
 sudo ansible-playbook server.yml
 ```
+
+Note: `non-free` package sources must be used for Debian.
