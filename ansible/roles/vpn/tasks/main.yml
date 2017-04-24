@@ -15,6 +15,11 @@
     path: /opt/vpn/libexec
     state: directory
 
+- name: Create the bin folder
+  file:
+    path: /opt/vpn/bin
+    state: directory
+
 - name: VPN server script
   template:
     src: libexec/server
@@ -25,6 +30,12 @@
   template:
     src: libexec/login
     dest: /opt/vpn/libexec/login
+    mode: 755
+
+- name: Script to generate client configuration file
+  template:
+    src: bin/generate-client-config
+    dest: /opt/vpn/bin/generate-client-config
     mode: 755
 
 - name: Create the initialization script

@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+
+IP_ADDRESS="$1"
+
+if [[ -z "$IP_ADDRESS" ]]; then
+  echo "Usage: $0 IP_ADDRESS" >&2
+  exit 1
+fi
+
+cd /opt/vpn
+
+cat <<EOF
+client
+proto udp
+remote $IP_ADDRESS 50688
+dev tun
+tls-client
+ns-cert-type server
+auth-user-pass
+
+<ca>
+$(cat easy-rsa/keys/ca.crt)
+</ca>
+EOF
