@@ -31,3 +31,7 @@
   template: src=initialize.d/vpn.sh
             dest=/opt/common/initialize.d/vpn.sh
             mode=755
+
+- name: Create the supervisor configuration file
+  template: src=supervisor/vpn.conf
+            dest=/etc/supervisor/conf.d/vpn.conf
