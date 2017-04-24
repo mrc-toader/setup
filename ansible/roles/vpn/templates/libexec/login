@@ -1,4 +1,4 @@
 #!/bin/bash
 set -e
 
-exec /bin/true
+exec /opt/liquid-core/libexec/checkuser "$username" "$password"

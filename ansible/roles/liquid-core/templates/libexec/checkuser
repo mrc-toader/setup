@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+
+cd /opt/liquid-core/liquid-core
+source /opt/liquid-core/venv/bin/activate
+exec ./manage.py checkuser "$@"

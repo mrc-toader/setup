@@ -62,6 +62,11 @@
             dest=/opt/liquid-core/libexec/h_user_delete
             mode=755
 
+- name: Create the checkuser
+  template: src=libexec/checkuser
+            dest=/opt/liquid-core/libexec/checkuser
+            mode=755
+
 - name: Create the supervisor configuration file
   template: src=supervisor/liquid-core.conf
             dest=/etc/supervisor/conf.d/liquid-core.conf
