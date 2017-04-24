@@ -1,0 +1,25 @@
+#!/bin/bash
+set -e
+
+cd /opt/vpn
+
+args=(
+  /usr/sbin/openvpn
+  --proto udp
+  --port 50688
+  --dev tun0
+  --server 10.103.0.0 255.255.255.0
+  --keepalive 10 60
+  --auth-user-pass-verify libexec/login via-env
+  --duplicate-cn
+  --script-security 3
+  --client-cert-not-required
+  --username-as-common-name
+  --tls-server
+  --dh easy-rsa/keys/dh2048.pem
+  --ca easy-rsa/keys/ca.crt
+  --cert easy-rsa/keys/server.crt
+  --key easy-rsa/keys/server.key
+)
+exec "${args[@]}"
+

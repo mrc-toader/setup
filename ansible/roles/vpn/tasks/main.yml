@@ -1,0 +1,33 @@
+---
+- name: Install openvpn
+  apt:
+    pkg:
+      - openvpn
+    state: installed
+
+- name: Create the vpn folder
+  file:
+    path: /opt/vpn
+    state: directory
+
+- name: Create the libexec folder
+  file:
+    path: /opt/vpn/libexec
+    state: directory
+
+- name: VPN server script
+  template:
+    src: libexec/server
+    dest: /opt/vpn/libexec/server
+    mode: 755
+
+- name: VPN login script
+  template:
+    src: libexec/login
+    dest: /opt/vpn/libexec/login
+    mode: 755
+
+- name: Create the initialization script
+  template: src=initialize.d/vpn.sh
+            dest=/opt/common/initialize.d/vpn.sh
+            mode=755
