@@ -1,0 +1,39 @@
+---
+- block:
+  - name: Import GPG key
+    apt_key:
+      url: https://www.dotdeb.org/dotdeb.gpg
+      state: present
+
+  - name: Add apt source
+    apt_repository:
+      repo: 'deb http://packages.dotdeb.org {{ ansible_distribution_release }} all'
+      state: present
+  when: ansible_distribution == "Debian"
+
+- name: Install php and libraries
+  apt:
+    pkg:
+      - php7.0
+      - php7.0-fpm
+      - php7.0-xml
+    state: installed
+
+- name: Create the top folder
+  file: path=/opt/dokuwiki state=directory mode=0755
+
+- name: Download dokuwiki source code
+  unarchive:
+    src: https://download.dokuwiki.org/out/dokuwiki-c5525093cf2c4f47e2e5d2439fe13964.tgz
+    dest: /opt
+    remote_src: yes
+    creates: /opt/dokuwiki/index.php
+
+- name: Create the nginx configuration file
+  template: src=nginx/dokuwiki.conf
+            dest=/etc/nginx/sites-enabled/dokuwiki.conf
+
+- name: Create the initialization script
+  template: src=initialize.d/dokuwiki.sh
+            dest=/opt/common/initialize.d/dokuwiki.sh
+            mode=755
